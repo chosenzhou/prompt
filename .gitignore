@@ -1,5 +1,6 @@
-# 默认忽略根目录下的所有文件和目录，仅跟踪以下三个文件。
+# 默认忽略根目录下的所有文件和目录，仅跟踪以下四个文件。
 /*
 !/.gitignore
 !/AGENTS.md
 !/SYSTEM_PROMPT.md
+!/README.md
