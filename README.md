@@ -18,7 +18,7 @@
 
 | 场景 | 源文件 | 适用内容 |
 | --- | --- | --- |
-| 编程 | [prompts/coding.md](prompts/coding.md) | 开发环境、Python / Node.js 工具链、修改原则与验证交付 |
+| 编程 | [prompts/coding.md](prompts/coding.md) | 开发环境、Git / SSH 与远端流程、Python / Node.js 工具链、修改原则与验证交付 |
 
 写作、研究等模板在实际需要时添加到 `prompts/`。每个目标项目选择适用的模板；模板目录用于保存和选择内容，避免把所有场景规则一起加载。
 
@@ -26,10 +26,10 @@
 
 ### 获取仓库
 
-已安装并登录 GitHub CLI 时：
+已安装并登录 GitHub CLI，且已配置 GitHub SSH 认证时：
 
 ```bash
-gh repo clone chosenzhou/prompt
+gh repo clone git@github.com:chosenzhou/prompt.git
 cd prompt
 ```
 
@@ -67,6 +67,12 @@ cp -n prompts/coding.md "$target_project/AGENTS.md"
 
 根目录的 `AGENTS.md` 负责维护这个提示词库；分发时使用 `prompts/` 中选定的场景模板。
 
+### 编程模板的 Git 行为
+
+模板会在开始开发或修改时确认项目已受 Git 管理；独立项目尚无仓库时自动初始化。需要远端操作时，GitHub 使用 `gh`、GitLab 使用 `glab` 管理和核验远端，Git 传输采用 SSH。
+
+本地初始化不自动触发远端创建、commit 或 push；这些动作按用户明确要求执行。完整的认证、远端目标和提交边界以 [prompts/coding.md](prompts/coding.md) 为准。
+
 ### 确认生效
 
 分发后在目标项目开启新的 Codex 会话，要求列出当前加载的全局与项目指令，核对实际内容。若没有加载预期文件，检查 `CODEX_HOME`、工作目录及同作用域的 `AGENTS.override.md`。[验证方法](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
@@ -76,7 +82,7 @@ cp -n prompts/coding.md "$target_project/AGENTS.md"
 - 跨场景的行为规则修改 `SYSTEM_PROMPT.md`，场景要求修改 `prompts/` 中对应模板，提示词库的维护要求修改根目录 `AGENTS.md`；同一规则保留一个权威出处。
 - 修改源文件并提交后，按需同步到全局入口与目标项目。安装方式是复制，`git pull` 不会自动更新已分发的副本。
 - 检查内容、相对链接和 `git diff --check`；重要行为调整在新的代理会话中验证，文本检查不等于模型行为实测。
-- `.gitignore` 允许跟踪根目录四个入口文件及 `prompts/`，忽略 `.DS_Store`。`docs/`、`GLOSSARY.md`、`.scratch/` 及其他本地资料保留在本机，不随仓库分发。
+- `.gitignore` 允许跟踪根目录四个入口文件及 `prompts/`，忽略 `.DS_Store`。`docs/`、`.scratch/` 及其他本地资料保留在本机，不随仓库分发。
 
 新增场景时，在 `prompts/` 创建一个小写英文名称的 Markdown 文件，多词用连字符，如 `long-form-writing.md`；注明适用范围，补充该场景规则，再更新上方模板索引。无需为未来场景预建空文件。
 
