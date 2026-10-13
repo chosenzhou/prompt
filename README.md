@@ -69,7 +69,7 @@ cp -n prompts/coding.md "$target_project/AGENTS.md"
 
 ### 编程模板的 Git 行为
 
-模板会在开始开发或修改时确认项目已受 Git 管理；独立项目尚无仓库时自动初始化。需要远端操作时，GitHub 使用 `gh`、GitLab 使用 `glab` 管理和核验远端，Git 传输采用 SSH。
+模板在首次修改前确认 Git 管理范围，复用已有仓库、worktree 或父级仓库；独立项目尚无仓库时自动初始化，未指定主分支时使用 `main`。需要远端操作时，GitHub 使用 `gh`、GitLab 使用 `glab` 管理和核验远端，Git 传输采用 SSH。
 
 本地初始化不自动触发远端创建、commit 或 push；这些动作按用户明确要求执行。完整的认证、远端目标和提交边界以 [prompts/coding.md](prompts/coding.md) 为准。
 
@@ -82,6 +82,7 @@ cp -n prompts/coding.md "$target_project/AGENTS.md"
 - 跨场景的行为规则修改 `SYSTEM_PROMPT.md`，场景要求修改 `prompts/` 中对应模板，提示词库的维护要求修改根目录 `AGENTS.md`；同一规则保留一个权威出处。
 - 修改源文件并提交后，按需同步到全局入口与目标项目。安装方式是复制，`git pull` 不会自动更新已分发的副本。
 - 检查内容、相对链接和 `git diff --check`；重要行为调整在新的代理会话中验证，文本检查不等于模型行为实测。
+- 精简模板时对照原文核对已确认的约定、适用条件和授权边界；文件大小变化只作为维护指标。
 - `.gitignore` 允许跟踪根目录四个入口文件及 `prompts/`，忽略 `.DS_Store`。`docs/`、`.scratch/` 及其他本地资料保留在本机，不随仓库分发。
 
 新增场景时，在 `prompts/` 创建一个小写英文名称的 Markdown 文件，多词用连字符，如 `long-form-writing.md`；注明适用范围，补充该场景规则，再更新上方模板索引。无需为未来场景预建空文件。
