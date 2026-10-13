@@ -1,6 +1,10 @@
-# 默认忽略根目录下的所有文件和目录，仅跟踪以下四个文件。
+# 默认忽略根目录下的内容，仅跟踪入口文档和场景模板目录。
 /*
 !/.gitignore
 !/AGENTS.md
 !/SYSTEM_PROMPT.md
 !/README.md
+!/prompts/
+
+# 即使位于场景模板目录，也忽略 macOS 目录元数据。
+.DS_Store
